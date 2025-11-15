@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mapa SIM7600 - Salta Capital</title>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" 
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+  #map {
+    height: 100vh;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// 🌎 Ubicación inicial: Salta Capital
+const map = L.map('map').setView([-24.7829, -65.4122], 13);
+
+// 💠 Capa de mapa
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+}).addTo(map);
+
+// ICONOS PERSONALIZADOS
+const iconOnlineOn = L.icon({
+  iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMzIgNkMyNCA2IDE4IDEyIDE4IDIwQzE4IDI5IDI2IDM4IDMxIDQ2QzMxLjQgNDYuNiAzMS43IDQ3LjIgMzIgNDcuOEMzMi4zIDQ3LjIgMzIuNiA0Ni42IDMzIDQ2QzM4IDM4IDQ2IDI5IDQ2IDIwQzQ2IDEyIDQwIDYgMzIgNloiIGZpbGw9IiMxNWIzMTgiIHN0cm9rZT0iIzBiNmUwYiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIyMiIgcj0iNyIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMjIiIHI9IjQiIGZpbGw9IiMwYjZlMGIiLz4KPC9zdmc+',
+  iconSize: [40, 40]
+});
+
+const iconOnlineOff = L.icon({
+  iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMzIgNkMyNCA2IDE4IDEyIDE4IDIwQzE4IDI5IDI2IDM4IDMxIDQ2QzMxLjQgNDYuNiAzMS43IDQ3LjIgMzIgNDcuOEMzMi4zIDQ3LjIgMzIuNiA0Ni42IDMzIDQ2QzM4IDM4IDQ2IDI5IDQ2IDIwQzQ2IDEyIDQwIDYgMzIgNloiIGZpbGw9IiNlNjAwMDAiIHN0cm9rZT0iIzk5MDAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIyMiIgcj0iNyIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMjIiIHI9IjQiIGZpbGw9IiM5OTAwMDAiLz4KPC9zdmc+',
+  iconSize: [40, 40]
+});
+
+const iconOffline = L.icon({
+  iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMzIgNkMyNCA2IDE4IDEyIDE4IDIwQzE4IDI5IDI2IDM4IDMxIDQ2QzMxLjQgNDYuNiAzMS43IDQ3LjIgMzIgNDcuOEMzMi4zIDQ3LjIgMzIuNiA0Ni42IDMzIDQ2QzM4IDM4IDQ2IDI5IDQ2IDIwQzQ2IDEyIDQwIDYgMzIgNloiIGZpbGw9IiNlNjAwMDAiIHN0cm9rZT0iIzk5MDAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIyMiIgcj0iNyIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMjIiIHI9IjQiIGZpbGw9IiM5OTAwMDAiLz4KICA8bGluZSB4MT0iMjAiIHkxPSIxMCIgeDI9IjQ0IiB5Mj0iMzQiIHN0cm9rZT0iI2ZmMDAwMCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iNDQiIHkxPSIxMCIgeDI9IjIwIiB5Mj0iMzQiIHN0cm9rZT0iI2ZmMDAwMCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+',
+  iconSize: [40, 40]
+});
+
+// URL Google Apps Script
+const apiUrl = "https://script.google.com/macros/s/AKfycbx8PiHY0WFkig01CuVJJrcezNus2Vucbc7b05bCIOx9yHvGXSC4_vNjtm_5C5C4ukURQA/exec";
+
+// 🔥 Almacén de marcadores
+let markers = {};
+
+// 🟢 Función para cargar y actualizar el mapa
+function actualizarMapa() {
+  fetch(apiUrl)
+    .then(r => r.json())
+    .then(data => {
+
+      data.forEach(eq => {
+        const id = eq.name; // identificador único
+
+        let icon;
+        if (eq.online == 0) {
+          icon = iconOffline;
+        } else {
+          icon = eq.on == 1 ? iconOnlineOn : iconOnlineOff;
+        }
+
+        // Si el marcador YA existe → se actualiza
+        if (markers[id]) {
+          markers[id].setLatLng([eq.lat, eq.long]);
+          markers[id].setIcon(icon);
+          markers[id].setPopupContent(`
+            <strong>${eq.name}</strong><br>
+            Voltaje: ${eq.volt}<br>
+            Estado: ${eq.on == 1 ? "Encendido" : "Apagado"}<br>
+            Online: ${eq.online == 1 ? "Sí" : "No"}
+          `);
+
+        } else {
+          // Si NO existe → se crea
+          markers[id] = L.marker([eq.lat, eq.long], { icon })
+            .addTo(map)
+            .bindPopup(`
+              <strong>${eq.name}</strong><br>
+              Voltaje: ${eq.volt}<br>
+              Estado: ${eq.on == 1 ? "Encendido" : "Apagado"}<br>
+              Online: ${eq.online == 1 ? "Sí" : "No"}
+            `);
+        }
+      });
+
+    })
+    .catch(err => console.error("Error cargando datos:", err));
+}
+
+// ⏱️ Actualizar cada 5 segundos
+setInterval(actualizarMapa, 5000);
+
+// ▶️ Cargar por primera vez
+actualizarMapa();
+
+</script>
+
+</body>
+</html>
