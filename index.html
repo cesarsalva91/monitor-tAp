@@ -13,83 +13,144 @@
     height: 100vh;
     width: 100%;
   }
+
+  /* Logo arriba derecha */
+  #logo {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 120px; 
+    z-index: 1000;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
 </style>
 </head>
+
 <body>
 
+<!-- LOGO -->
+<img id="logo" src="img/lusal.jpeg" alt="Logo">
+
+<!-- MAPA -->
 <div id="map"></div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-// 🌎 Ubicación inicial: Salta Capital
+//Ubicación inicial
 const map = L.map('map').setView([-24.7829, -65.4122], 13);
 
-// 💠 Capa de mapa
+// Mapa base
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
 }).addTo(map);
 
-// ICONOS PERSONALIZADOS
+// ICONOS
 const iconOnlineOn = L.icon({
   iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMzIgNkMyNCA2IDE4IDEyIDE4IDIwQzE4IDI5IDI2IDM4IDMxIDQ2QzMxLjQgNDYuNiAzMS43IDQ3LjIgMzIgNDcuOEMzMi4zIDQ3LjIgMzIuNiA0Ni42IDMzIDQ2QzM4IDM4IDQ2IDI5IDQ2IDIwQzQ2IDEyIDQwIDYgMzIgNloiIGZpbGw9IiMxNWIzMTgiIHN0cm9rZT0iIzBiNmUwYiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIyMiIgcj0iNyIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMjIiIHI9IjQiIGZpbGw9IiMwYjZlMGIiLz4KPC9zdmc+',
   iconSize: [40, 40]
 });
+
 
 const iconOnlineOff = L.icon({
   iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMzIgNkMyNCA2IDE4IDEyIDE4IDIwQzE4IDI5IDI2IDM4IDMxIDQ2QzMxLjQgNDYuNiAzMS43IDQ3LjIgMzIgNDcuOEMzMi4zIDQ3LjIgMzIuNiA0Ni42IDMzIDQ2QzM4IDM4IDQ2IDI5IDQ2IDIwQzQ2IDEyIDQwIDYgMzIgNloiIGZpbGw9IiNlNjAwMDAiIHN0cm9rZT0iIzk5MDAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIyMiIgcj0iNyIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMjIiIHI9IjQiIGZpbGw9IiM5OTAwMDAiLz4KPC9zdmc+',
   iconSize: [40, 40]
 });
 
+
 const iconOffline = L.icon({
   iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMzIgNkMyNCA2IDE4IDEyIDE4IDIwQzE4IDI5IDI2IDM4IDMxIDQ2QzMxLjQgNDYuNiAzMS43IDQ3LjIgMzIgNDcuOEMzMi4zIDQ3LjIgMzIuNiA0Ni42IDMzIDQ2QzM4IDM4IDQ2IDI5IDQ2IDIwQzQ2IDEyIDQwIDYgMzIgNloiIGZpbGw9IiNlNjAwMDAiIHN0cm9rZT0iIzk5MDAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMzIiIGN5PSIyMiIgcj0iNyIgZmlsbD0iI2ZmZmZmZiIvPgogIDxjaXJjbGUgY3g9IjMyIiBjeT0iMjIiIHI9IjQiIGZpbGw9IiM5OTAwMDAiLz4KICA8bGluZSB4MT0iMjAiIHkxPSIxMCIgeDI9IjQ0IiB5Mj0iMzQiIHN0cm9rZT0iI2ZmMDAwMCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iNDQiIHkxPSIxMCIgeDI9IjIwIiB5Mj0iMzQiIHN0cm9rZT0iI2ZmMDAwMCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+',
   iconSize: [40, 40]
 });
 
-// URL Google Apps Script
-const apiUrl = "https://script.google.com/macros/s/AKfycbx8PiHY0WFkig01CuVJJrcezNus2Vucbc7b05bCIOx9yHvGXSC4_vNjtm_5C5C4ukURQA/exec";
 
-// 🔥 Almacén de marcadores
+// URL Google Apps Script
+const apiUrl = "https://script.google.com/macros/s/AKfycbypJMUcPMfJM89bHpnqHDlVjt3wyF7wfDvTJiooZNs9lR6qlfkCYTd9e3vbXzBvDMvH1A/exec";
+
+// Marcadores
 let markers = {};
 
-// 🟢 Función para cargar y actualizar el mapa
+
+// =====================================================
+// FUNCIÓN PARA CAMBIAR POWER DESDE EL POPUP
+// =====================================================
+function togglePower(name, currentValue) {
+  const newValue = currentValue === 1 ? 0 : 1;
+
+  // Cambiar visual del botón sin cerrar popup
+  const btn = document.getElementById(`btn-${name}`);
+  if (btn) {
+    btn.style.background = newValue ? "#4CAF50" : "#D32F2F";
+    btn.innerText = newValue ? "ENCENDIDO" : "APAGADO";
+  }
+
+  // Enviar actualización al Google Sheets
+  fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `name=${encodeURIComponent(name)}&power=${newValue}`
+  })
+  .then(r => r.text())
+  .then(txt => console.log("Respuesta Sheets:", txt))
+  .catch(err => console.error("Error POST:", err));
+}
+
+
+
+// =====================================================
+// FUNCIÓN PRINCIPAL: ACTUALIZAR EL MAPA
+// =====================================================
 function actualizarMapa() {
   fetch(apiUrl)
     .then(r => r.json())
     .then(data => {
 
       data.forEach(eq => {
-        const id = eq.name; // identificador único
+        const id = eq.name;
 
+        // Elegir icono según estado
         let icon;
-        if (eq.online == 0) {
-          icon = iconOffline;
-        } else {
-          icon = eq.on == 1 ? iconOnlineOn : iconOnlineOff;
-        }
+        if (eq.online == 0) icon = iconOffline;
+        else icon = eq.on == 1 ? iconOnlineOn : iconOnlineOff;
 
-        // Si el marcador YA existe → se actualiza
+        // HTML del popup
+        const popupHTML = `
+          <strong>${eq.name}</strong><br>
+          Voltaje: ${eq.volt}<br>
+          Estado: ${eq.on == 1 ? "Encendido" : "Apagado"}<br>
+          Online: ${eq.online == 1 ? "Sí" : "No"}<br>
+          Power: ${eq.power == 1 ? "Encendido" : "Apagado"}<br><br>
+
+          <button id="btn-${eq.name}"
+            style="
+              background:${eq.power == 1 ? '#4CAF50' : '#D32F2F'};
+              color:white;
+              padding:8px;
+              border:none;
+              border-radius:6px;
+              cursor:pointer;
+            "
+            onclick="togglePower('${eq.name}', ${eq.power})"
+          >
+            ${eq.power == 1 ? "ENCENDIDO" : "APAGADO"}
+          </button>
+        `;
+
+        // Si el marcador existe → actualizar
         if (markers[id]) {
           markers[id].setLatLng([eq.lat, eq.long]);
           markers[id].setIcon(icon);
-          markers[id].setPopupContent(`
-            <strong>${eq.name}</strong><br>
-            Voltaje: ${eq.volt}<br>
-            Estado: ${eq.on == 1 ? "Encendido" : "Apagado"}<br>
-            Online: ${eq.online == 1 ? "Sí" : "No"}
-          `);
+          markers[id].setPopupContent(popupHTML);
 
         } else {
-          // Si NO existe → se crea
+          // Si no existe → crear
           markers[id] = L.marker([eq.lat, eq.long], { icon })
             .addTo(map)
-            .bindPopup(`
-              <strong>${eq.name}</strong><br>
-              Voltaje: ${eq.volt}<br>
-              Estado: ${eq.on == 1 ? "Encendido" : "Apagado"}<br>
-              Online: ${eq.online == 1 ? "Sí" : "No"}
-            `);
+            .bindPopup(popupHTML);
         }
       });
 
@@ -97,12 +158,12 @@ function actualizarMapa() {
     .catch(err => console.error("Error cargando datos:", err));
 }
 
-// ⏱️ Actualizar cada 5 segundos
+
+// Actualizar cada segundo
 setInterval(actualizarMapa, 1000);
 
-// ▶️ Cargar por primera vez
+// Primera carga
 actualizarMapa();
-
 </script>
 
 </body>
